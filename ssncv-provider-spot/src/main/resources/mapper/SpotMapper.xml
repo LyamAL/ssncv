@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zaq.ssncv.ssncvproviderspot.mapper.SpotMapper">
+    <resultMap id="BaseResultMap" type="Spot">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="position" jdbcType="VARCHAR" property="position"/>
+        <result column="image" jdbcType="VARCHAR" property="image"/>
+        <result column="lastModified" jdbcType="TIMESTAMP" property="lastmodified"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="Spot">
+        <result column="description" jdbcType="LONGVARCHAR" property="description"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, position, image, lastModified
+    </sql>
+    <sql id="Blob_Column_List">
+        description
+    </sql>
+    <select id="selectWithLimit" resultType="Spot">
+        select *
+        from spot
+        order by id
+        limit #{start}, #{limit}
+    </select>
+    <select id="findByName" resultType="Spot">
+        select *
+        from spot
+        where name like CONCAT(CONCAT('%', #{name}), '%')
+        order by id
+        limit #{start}, #{limit}
+    </select>
+    <select id="selectAll" resultType="Spot">
+        select *
+        from spot
+    </select>
+    <select id="selectById" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from spot
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.String">
+        delete
+        from spot
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="Spot">
+        insert into spot (id, name, position,
+                          image, lastModified, description)
+        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR},
+                #{image,jdbcType=VARCHAR}, #{lastmodified,jdbcType=TIMESTAMP}, #{description,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelectively" parameterType="Spot">
+        insert into spot
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="image != null">
+                image,
+            </if>
+            <if test="lastmodified != null">
+                lastModified,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="image != null">
+                #{image,jdbcType=VARCHAR},
+            </if>
+            <if test="lastmodified != null">
+                #{lastmodified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByIdSelectively" parameterType="Spot">
+        update spot
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="image != null">
+                image = #{image,jdbcType=VARCHAR},
+            </if>
+            <if test="lastmodified != null">
+                lastModified = #{lastmodified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateById" parameterType="Spot">
+        update spot
+        set name         = #{name,jdbcType=VARCHAR},
+            position     = #{position,jdbcType=VARCHAR},
+            image        = #{image,jdbcType=VARCHAR},
+            lastModified = #{lastmodified,jdbcType=TIMESTAMP},
+            description  = #{description,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+</mapper>

@@ -9,9 +9,6 @@ CREATE TABLE `surrounding` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of surrounding
--- ----------------------------
 INSERT INTO `surrounding` VALUES ('1', '交通线路', '[\"107路内环晚班 19:40-22:30\",\"109路晚班 19:54-23:14\",\"111路晚班 19:25-23:15\"]');
 INSERT INTO `surrounding` VALUES ('2', '便民服务', '[\"芜湖市政府 景区北门\",\"第二人民医院 景区南门\",\"皖医二附院 景区东门\"]');
 INSERT INTO `surrounding` VALUES ('3', '公共厕所', '[\"鸠兹风景区公共厕所一 景区东北角\",\"鸠兹风景区公共厕所二 景区东南角\",\"鸠兹风景区公共厕所三 景区西北角\"]');
