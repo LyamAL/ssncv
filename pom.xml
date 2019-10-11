@@ -21,6 +21,7 @@
         <module>ssncv-consumer-comment</module>
         <module>ssncv-api-gateway</module>
         <module>ssncv-config-server</module>
+        <module>ssncv-config-client</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

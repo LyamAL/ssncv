@@ -3,20 +3,21 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>ssncv</artifactId>
-        <groupId>com.zaq.ssncv</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.9.RELEASE</version>
+        <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>ssncv-config-server</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>com.zaq.ssncv</groupId>
-            <artifactId>ssncv-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.zaq.ssncv</groupId>-->
+        <!--            <artifactId>ssncv-api</artifactId>-->
+        <!--            <version>${project.version}</version>-->
+        <!--        </dependency>-->
         <!--        <dependency>-->
         <!--            <groupId>org.springframework.cloud</groupId>-->
         <!--            <artifactId>spring-cloud-starter-config</artifactId>-->
@@ -24,11 +25,21 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
-            <version>${cloud.plugin.version}</version>
+            <!--            <version>1.4.7</version>-->
             <!--            <type>pom</type>-->
             <!--            <scope>import</scope>-->
         </dependency>
-
-
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Greenwich.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
