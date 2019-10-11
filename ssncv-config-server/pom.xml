@@ -13,21 +13,13 @@
     <artifactId>ssncv-config-server</artifactId>
 
     <dependencies>
-        <!--        <dependency>-->
-        <!--            <groupId>com.zaq.ssncv</groupId>-->
-        <!--            <artifactId>ssncv-api</artifactId>-->
-        <!--            <version>${project.version}</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.cloud</groupId>-->
-        <!--            <artifactId>spring-cloud-starter-config</artifactId>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
-            <!--            <version>1.4.7</version>-->
-            <!--            <type>pom</type>-->
-            <!--            <scope>import</scope>-->
         </dependency>
     </dependencies>
 
