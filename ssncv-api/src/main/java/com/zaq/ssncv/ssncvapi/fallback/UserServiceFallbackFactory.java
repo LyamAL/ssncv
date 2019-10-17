@@ -36,6 +36,13 @@ public class UserServiceFallbackFactory implements FallbackFactory<UserService> 
             }};
         }
 
+        @Override
+        public Result<String> logout() {
+            return new Result<String>() {{
+                setMsg("降级处理");
+            }};
+        }
+
     }
 }
 

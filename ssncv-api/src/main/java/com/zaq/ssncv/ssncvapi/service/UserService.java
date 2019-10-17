@@ -23,4 +23,6 @@ public interface UserService {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     Result<String> register(@RequestBody User user);
 
+    @RequestMapping(value = "/logOut", method = RequestMethod.GET)
+    Result<String> logout();
 }

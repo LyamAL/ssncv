@@ -80,7 +80,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .formLogin()
                 .loginPage("/user/login")
                 .usernameParameter("phone")
-                .passwordParameter("password");
+                .passwordParameter("password")
+                .and()
+                .logout()
+                .logoutUrl("/user/logOut");
 
         http
                 .sessionManagement()

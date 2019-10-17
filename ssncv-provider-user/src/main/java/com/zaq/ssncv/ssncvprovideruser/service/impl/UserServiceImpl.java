@@ -117,7 +117,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                     throw new SessionAuthenticationException("当前用户已经在线，登录失败");
                 }
             }
-            authorities.add(new SimpleGrantedAuthority("ADMIN"));
+            for (GrantedAuthority authority : user.getRoles()) {
+                authorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
+            }
         }
         return user;
 //        return new org.springframework.security.core.userdetails.User(String.valueOf(user.getId()),
