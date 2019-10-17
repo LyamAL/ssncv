@@ -36,7 +36,7 @@ public class SpotController {
     }
 
     @RequestMapping("/list/all")
-    public Result<List<Spot>> listAll(@PathVariable int start, @PathVariable int limit) {
+    public Result<List<Spot>> listAll(@RequestParam int start, @RequestParam int limit) {
         Result<List<Spot>> res = new Result<>();
         List<Spot> list = spotService.list(start, limit);
         res.setSuccess(list != null);

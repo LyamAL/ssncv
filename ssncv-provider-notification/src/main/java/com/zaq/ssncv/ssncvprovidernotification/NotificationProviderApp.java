@@ -1,4 +1,4 @@
-package com.zaq.ssncv.ssncvprovideruser;
+package com.zaq.ssncv.ssncvprovidernotification;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -11,10 +11,11 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  */
 @SpringBootApplication
 @EnableEurekaClient
-@MapperScan("com.zaq.ssncv.ssncvprovideruser.mapper")
 @EnableDiscoveryClient
-public class UserProviderApp {
+@MapperScan("com.zaq.ssncv.ssncvprovidernotification.mapper")
+public class NotificationProviderApp {
     public static void main(String[] args) {
-        SpringApplication.run(UserProviderApp.class, args);
+        SpringApplication.run(NotificationProviderApp.class, args);
     }
+
 }

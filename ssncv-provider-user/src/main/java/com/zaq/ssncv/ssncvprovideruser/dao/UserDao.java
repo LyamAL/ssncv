@@ -36,7 +36,7 @@ public interface UserDao {
 
     int updateSelectively(User user);
 
-    User selectByPhone(User user);
+    User selectByPhone(String phone);
 
     /**
      * 获取对象
@@ -46,7 +46,7 @@ public interface UserDao {
      */
     User findById(int id);
 
-    int updateAfterAuth(UserOnModify user);
+    int updateWhenPswMatches(UserOnModify user);
 
     List<User> queryAll();
 }

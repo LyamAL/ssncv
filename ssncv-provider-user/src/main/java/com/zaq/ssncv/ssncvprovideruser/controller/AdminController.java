@@ -5,7 +5,6 @@ import com.zaq.ssncv.ssncvapi.entity.User;
 import com.zaq.ssncv.ssncvapi.entity.UserOnModify;
 import com.zaq.ssncv.ssncvprovideruser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,18 +13,16 @@ import java.util.List;
  * @author ZAQ
  */
 @RestController
-@RequestMapping("/user")
-public class UserController {
-    public static final int KEY_DUPLICATE_PHONE = -1;
-    public static final int KEY_DUPLICATE_USERNAME = -2;
+@RequestMapping("/admin")
+public class AdminController {
     private static final String SUCCESS = "SUCCESS";
     private static final String BAD_CREDENTIAL = "wrong password";
     private UserService userService;
 
-    public UserController(@Autowired UserService userService) {
+    public AdminController(@Autowired UserService userService) {
         this.userService = userService;
     }
-//
+
 //    @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 //    public Result<User> login(@RequestBody User user) {
 //        Result<User> result = new Result<>();
@@ -42,22 +39,6 @@ public class UserController {
 //        }
 //        return result;
 //    }
-
-    @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Result<User> register(@RequestBody User user) {
-        Result<User> result = new Result<>();
-        int status = userService.register(user);
-        if (isSuccess(status)) {
-            result.setSuccess(true);
-            result.setMsg(SUCCESS);
-        } else {
-            result.setSuccess(false);
-            String msg = userService.getMessage(status);
-            result.setMsg(msg);
-        }
-        result.setData(user);
-        return result;
-    }
 
     private boolean isSuccess(int status) {
         return status > 0;
@@ -87,7 +68,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/update/auth", method = RequestMethod.PUT)
-    public Result<String> updateAfterAuth(@RequestBody UserOnModify user) {
+    public Result<String> updateWhenPswMatches(@RequestBody UserOnModify user) {
         Result<String> res = new Result<>();
         int status = userService.updateAfterAuth(user);
         if (isSuccess(status)) {
@@ -123,7 +104,7 @@ public class UserController {
         return res;
     }
 
-    @RequestMapping(value = "/admin/query/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/query/all", method = RequestMethod.GET)
     public Result<List<User>> queryAll() {
         Result<List<User>> res = new Result<>();
         List<User> list = userService.queryAll();

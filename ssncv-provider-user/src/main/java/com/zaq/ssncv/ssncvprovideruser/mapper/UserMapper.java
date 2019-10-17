@@ -38,11 +38,11 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    int updateAfterAuth(UserOnModify user);
+    int updateWhenPswMatches(UserOnModify user);
 
     int updateSelectively(User user);
 
-    User selectByPhone(User user);
+    User selectByPhone(String user);
 
     /**
      * 获取对象

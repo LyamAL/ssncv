@@ -22,6 +22,8 @@
         <module>ssncv-api-gateway</module>
         <module>ssncv-config-server</module>
         <module>ssncv-config-client</module>
+        <module>ssncv-provider-notification</module>
+        <module>ssncv-consumer-notification</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

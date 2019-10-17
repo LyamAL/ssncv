@@ -9,8 +9,6 @@ import java.util.List;
  * @author ZAQ
  */
 public interface UserService {
-    User login(User user);
-
     int delete(int id);
 
     int update(User user);

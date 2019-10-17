@@ -46,8 +46,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int updateAfterAuth(UserOnModify user) {
-        return userMapper.updateAfterAuth(user);
+    public int updateWhenPswMatches(UserOnModify user) {
+        return userMapper.updateWhenPswMatches(user);
     }
 
     @Override
@@ -61,8 +61,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User selectByPhone(User user) {
-        return userMapper.selectByPhone(user);
+    public User selectByPhone(String phone) {
+        return userMapper.selectByPhone(phone);
     }
 
     @Override

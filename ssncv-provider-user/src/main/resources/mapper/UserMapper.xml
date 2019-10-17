@@ -9,6 +9,14 @@
         <result column="password" jdbcType="VARCHAR" property="password"/>
     </resultMap>
 
+    <resultMap id="UserRoleResultMap" type="User" extends="BaseResultMap">
+        <collection property="roles" select="selectRolesByUid" ofType="Role" column="id"/>
+    </resultMap>
+    <select id="selectRolesByUid" resultType="Role">
+        select *
+        from role
+        where uid = #{id}
+    </select>
     <sql id="Base_Column_List">
         id, phone, username, avatar, password
     </sql>
@@ -22,11 +30,17 @@
     </select>
 
 
-    <select id="selectByPhone" parameterType="User" resultType="User">
+    <select id="selectByPhoneAndPsw" parameterType="User" resultType="User">
         select
         <include refid="Base_Column_List"/>
         from user
         where phone = #{phone} and password = #{password}
+    </select>
+    <select id="selectByPhone" parameterType="String" resultMap="UserRoleResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where phone = #{phone}
     </select>
 
     <select id="selectByName" parameterType="java.lang.String"
@@ -86,7 +100,7 @@
         </trim>
     </insert>
 
-    <update id="updateAfterAuth" parameterType="UserOnModify">
+    <update id="updateWhenPswMatches" parameterType="UserOnModify">
         update user
         <set>
             <if test="newPhone != null">
