@@ -1,11 +1,10 @@
 package com.zaq.ssncv.ssncvprovideruser;
 
-import com.zaq.ssncv.ssncvprovideruser.config.JsonUsernamePasswordAuthenticationFilter;
-import com.zaq.ssncv.ssncvprovideruser.config.MyAuthenticationFailureHandler;
-import com.zaq.ssncv.ssncvprovideruser.config.MyAuthenticationSuccessHandler;
+import com.zaq.ssncv.ssncvprovideruser.config.*;
+import com.zaq.ssncv.ssncvprovideruser.entity.AuthParameters;
+import com.zaq.ssncv.ssncvprovideruser.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -15,36 +14,59 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author ZAQ
  */
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
     @Autowired
-    SessionRegistry sessionRegistry;
-    @Autowired
     @Qualifier("userServiceImpl")
-    private UserDetailsService userDetailsService;
+    private UserServiceImpl userService;
     @Autowired
     private AuthenticationProvider authenticationProvider;
     @Autowired
     private JsonUsernamePasswordAuthenticationFilter jsonUsernamePasswordAuthenticationFilter;
+    @Autowired
+    private CustomLogoutHandler customLogoutHandler;
+    @Autowired
+    private CustomLogoutSuccessHandler customLogoutSuccessHandler;
+    @Autowired
+    private UnauthorizedEntryPoint unauthorizedEntryPoint;
 
     @Bean
     public SessionRegistry getSessionRegistry() {
         return new SessionRegistryImpl();
+    }
+
+    @Bean
+    public AuthParameters getAuthParameters() {
+        return new AuthParameters();
+    }
+
+    @Bean
+    public JwtAuthenticationFilter getJwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
+    }
+
+    @Bean
+    public CustomLogoutHandler getCustomLogoutHandler() {
+        return new CustomLogoutHandler();
+    }
+
+    @Bean
+    public CustomLogoutSuccessHandler getCustomLogoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler();
     }
 
     @Bean
@@ -67,15 +89,53 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
         return new MyAuthenticationSuccessHandler();
     }
 
+    @Bean
+    public JwtTokenProvider getJwtTokenProvider() {
+        return new JwtTokenProvider();
+    }
+
+    @Bean
+    public UnauthorizedEntryPoint getUnauthorizedEntryPoint() {
+        return new UnauthorizedEntryPoint();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder getbCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationProvider getAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setHideUserNotFoundExceptions(false);
+        provider.setUserDetailsService(userService);
+        provider.setPasswordEncoder(getbCryptPasswordEncoder());
+//        provider.setPasswordEncoder(new PasswordEncoder() {
+//            @Override
+//            public String encode(CharSequence charSequence) {
+//                return (String) charSequence;
+//            }
+//
+//            @Override
+//            public boolean matches(CharSequence charSequence, String s) {
+//                return charSequence.toString().equals(s);
+//            }
+//        });
+        return provider;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .addFilterBefore(getJwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
                         "/user/login", "/user/add")
                 .permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated().and()
                 .formLogin()
                 .loginPage("/user/login")
@@ -83,12 +143,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .passwordParameter("password")
                 .and()
                 .logout()
-                .logoutUrl("/user/logOut");
-
-        http
-                .sessionManagement()
-                .maximumSessions(1)
-                .sessionRegistry(getSessionRegistry());
+                .logoutUrl("/user/logout")
+                .logoutSuccessHandler(customLogoutSuccessHandler)
+                .addLogoutHandler(customLogoutHandler)
+                .and().exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint);
 
         http.addFilterAt(jsonUsernamePasswordAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         http.httpBasic();
@@ -98,46 +156,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider);
     }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setHideUserNotFoundExceptions(false);
-        provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(new PasswordEncoder() {
-            @Override
-            public String encode(CharSequence charSequence) {
-                return (String) charSequence;
-            }
-
-            @Override
-            public boolean matches(CharSequence charSequence, String s) {
-                return charSequence.toString().equals(s);
-            }
-        });
-        return provider;
-    }
-
-    //    @Bean
-//    public LocaleResolver localResolver() {
-//        return new SessionLocaleResolver();
-//    }
-//
-//    /**
-//     * 检查所有请求的lang的查询参数
-//     * return
-//     */
-//    @Bean
-//    public LocaleChangeInterceptor localeChangeInterceptor() {
-//        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-//        localeChangeInterceptor.setParamName("lang");
-//        return localeChangeInterceptor;
-//    }
-
-    @Bean
-    public ServletListenerRegistrationBean httpSessionEventPublisher() {
-        return new ServletListenerRegistrationBean(new HttpSessionEventPublisher());
-    }
-
-
 }

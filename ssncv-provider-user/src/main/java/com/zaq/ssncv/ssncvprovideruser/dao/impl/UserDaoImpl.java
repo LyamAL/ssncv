@@ -1,5 +1,7 @@
 package com.zaq.ssncv.ssncvprovideruser.dao.impl;
 
+import com.zaq.ssncv.ssncvapi.entity.Authority;
+import com.zaq.ssncv.ssncvapi.entity.Role;
 import com.zaq.ssncv.ssncvapi.entity.User;
 import com.zaq.ssncv.ssncvapi.entity.UserOnModify;
 import com.zaq.ssncv.ssncvprovideruser.dao.UserDao;
@@ -26,6 +28,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public int insertRole(int uid) {
+        Role role = new Role();
+        role.setUid(uid);
+        role.setAuthority(Authority.USER.toString());
+        return userMapper.insertRole(role);
+    }
+
+    @Override
     public int insertSelectively(User user) {
         return userMapper.insertSelectively(user);
     }
@@ -46,12 +56,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int updateWhenPswMatches(UserOnModify user) {
-        return userMapper.updateWhenPswMatches(user);
-    }
-
-    @Override
-    public int update(User user) {
+    public int update(UserOnModify user) {
         return userMapper.update(user);
     }
 

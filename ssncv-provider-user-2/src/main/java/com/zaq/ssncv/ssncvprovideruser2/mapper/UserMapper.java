@@ -1,7 +1,11 @@
 package com.zaq.ssncv.ssncvprovideruser2.mapper;
 
+import com.zaq.ssncv.ssncvapi.entity.Role;
 import com.zaq.ssncv.ssncvapi.entity.User;
+import com.zaq.ssncv.ssncvapi.entity.UserOnModify;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -18,18 +22,33 @@ public interface UserMapper {
     /**
      * 删除用户
      *
-     * @param user
      * @return
      */
-    int delete(User user);
+    int delete(int id);
 
     User selectById(int id);
 
     User selectByName(String username);
 
-    int update(User user);
+    /**
+     * @param user
+     * @return
+     */
+    int update(UserOnModify user);
 
     int updateSelectively(User user);
 
-    User selectByPhone(String phone);
+    User selectByPhone(String user);
+
+    /**
+     * 获取对象
+     *
+     * @param id 主键
+     * @return
+     */
+    User findById(int id);
+
+    List<User> queryAll();
+
+    int insertRole(Role role);
 }

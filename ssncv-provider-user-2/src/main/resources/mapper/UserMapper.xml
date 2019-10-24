@@ -9,6 +9,14 @@
         <result column="password" jdbcType="VARCHAR" property="password"/>
     </resultMap>
 
+    <resultMap id="UserRolesResultMap" type="User" extends="BaseResultMap">
+        <collection property="roles" select="selectRolesByUid" ofType="Role" column="id"/>
+    </resultMap>
+    <select id="selectRolesByUid" resultType="String">
+        select authority
+        from role
+        where uid = #{id}
+    </select>
     <sql id="Base_Column_List">
         id, phone, username, avatar, password
     </sql>
@@ -20,15 +28,22 @@
         from user
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <select id="selectByPhone" parameterType="String" resultType="User">
+
+    <select id="selectByPhoneAndPsw" parameterType="User" resultType="User">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where phone = #{phone} and password = #{password}
+    </select>
+    <select id="selectByPhone" parameterType="String" resultMap="UserRolesResultMap">
         select
         <include refid="Base_Column_List"/>
         from user
         where phone = #{phone}
     </select>
 
-    <select id="selectByName" parameterType="java.lang.String"
-            resultType="User">
+    <select id="selectByName" parameterType="String"
+            resultMap="UserRolesResultMap">
         select
         <include refid="Base_Column_List"/>
         from user
@@ -41,12 +56,17 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
-    <insert id="insert" parameterType="User">
+    <insert id="insert" parameterType="User" statementType="PREPARED"
+            keyColumn="id" keyProperty="id" useGeneratedKeys="true">
         insert into user (id, phone, username, avatar, password)
         values (#{id,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
                 #{avatar,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertSelectively" parameterType="com.zaq.ssncv.ssncvapi.entity.User">
+    <insert id="insertRole" parameterType="Integer" statementType="PREPARED">
+        insert into role
+        set uid=#{uid}
+    </insert>
+    <insert id="insertSelectively" parameterType="User" useGeneratedKeys="true" statementType="PREPARED">
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -84,31 +104,18 @@
         </trim>
     </insert>
 
-    <update id="updateSelectively" parameterType="com.zaq.ssncv.ssncvapi.entity.User">
+    <update id="update" parameterType="UserOnModify">
         update user
-        <set>
-            <if test="phone != null">
-                phone = #{phone,jdbcType=VARCHAR},
-            </if>
-            <if test="username != null">
-                username = #{username,jdbcType=VARCHAR},
-            </if>
-            <if test="avatar != null">
-                avatar = #{avatar,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null">
-                password = #{password,jdbcType=VARCHAR},
-            </if>
-        </set>
+        set phone    = #{newPhone,jdbcType=VARCHAR},
+            username = #{newName,jdbcType=VARCHAR},
+            avatar   = #{avatar,jdbcType=VARCHAR},
+            password = #{newPsw,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <update id="update" parameterType="com.zaq.ssncv.ssncvapi.entity.User">
-        update user
-        set phone    = #{phone,jdbcType=VARCHAR},
-            username = #{username,jdbcType=VARCHAR},
-            avatar   = #{avatar,jdbcType=VARCHAR},
-            password = #{password,jdbcType=VARCHAR}
-        where id = #{id,jdbcType=INTEGER}
-    </update>
+    <select id="queryAll" resultType="User">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+    </select>
 </mapper>

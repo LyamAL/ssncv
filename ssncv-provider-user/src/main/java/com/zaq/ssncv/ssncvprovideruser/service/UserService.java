@@ -1,28 +1,29 @@
 package com.zaq.ssncv.ssncvprovideruser.service;
 
+import com.zaq.ssncv.ssncvapi.entity.Result;
 import com.zaq.ssncv.ssncvapi.entity.User;
 import com.zaq.ssncv.ssncvapi.entity.UserOnModify;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
 /**
  * @author ZAQ
  */
-public interface UserService {
-    int delete(int id);
+public interface UserService extends UserDetailsService {
+    Result<String> delete(int id);
 
-    int update(User user);
+    Result<String> update(UserOnModify user);
 
-    int updateAfterAuth(UserOnModify user);
+    Result<String> updateSelectively(User user);
 
-    int updateSelectively(User user);
-
-    int register(User user);
+    Result<User> register(User user);
 
 
-    User findById(int id);
+    Result<User> findById(int id);
 
-    List<User> queryAll();
+    Result<List<User>> queryAll();
 
-    String getMessage(int status);
+
+
 }

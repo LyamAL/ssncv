@@ -16,6 +16,7 @@
             <groupId>com.zaq.ssncv</groupId>
             <artifactId>ssncv-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+
         </dependency>
         <!--注册服务-->
         <dependency>

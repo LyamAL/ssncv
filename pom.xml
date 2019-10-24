@@ -43,6 +43,7 @@
         <cloud.plugin.version>1.4.7.RELEASE</cloud.plugin.version>
         <mybatis.plugin.version>1.3.5</mybatis.plugin.version>
         <mysql.version>8.0.15</mysql.version>
+        <boot.version>2.1.9.RELEASE</boot.version>
     </properties>
     <dependencyManagement>
         <dependencies>

@@ -1,10 +1,15 @@
 package com.zaq.ssncv.ssncvprovideruser2.dao.impl;
 
+import com.zaq.ssncv.ssncvapi.entity.Authority;
+import com.zaq.ssncv.ssncvapi.entity.Role;
 import com.zaq.ssncv.ssncvapi.entity.User;
+import com.zaq.ssncv.ssncvapi.entity.UserOnModify;
 import com.zaq.ssncv.ssncvprovideruser2.dao.UserDao;
 import com.zaq.ssncv.ssncvprovideruser2.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author ZAQ
@@ -23,13 +28,21 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public int insertRole(int uid) {
+        Role role = new Role();
+        role.setUid(uid);
+        role.setAuthority(Authority.USER.toString());
+        return userMapper.insertRole(role);
+    }
+
+    @Override
     public int insertSelectively(User user) {
         return userMapper.insertSelectively(user);
     }
 
     @Override
-    public int delete(User user) {
-        return userMapper.delete(user);
+    public int delete(int id) {
+        return userMapper.delete(id);
     }
 
     @Override
@@ -43,7 +56,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int update(User user) {
+    public int update(UserOnModify user) {
         return userMapper.update(user);
     }
 
@@ -55,5 +68,15 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User selectByPhone(String phone) {
         return userMapper.selectByPhone(phone);
+    }
+
+    @Override
+    public User findById(int id) {
+        return userMapper.findById(id);
+    }
+
+    @Override
+    public List<User> queryAll() {
+        return userMapper.queryAll();
     }
 }

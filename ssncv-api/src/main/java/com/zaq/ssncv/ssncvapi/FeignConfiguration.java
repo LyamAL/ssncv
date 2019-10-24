@@ -13,6 +13,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 @Configuration
 public class FeignConfiguration {
 
+
     @Bean
     public static Request.Options requestOptions(ConfigurableEnvironment env) {
         return new Request.Options(500000, 100000);

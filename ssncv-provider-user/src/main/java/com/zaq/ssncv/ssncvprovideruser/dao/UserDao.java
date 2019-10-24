@@ -1,6 +1,5 @@
 package com.zaq.ssncv.ssncvprovideruser.dao;
 
-
 import com.zaq.ssncv.ssncvapi.entity.User;
 import com.zaq.ssncv.ssncvapi.entity.UserOnModify;
 
@@ -18,6 +17,8 @@ public interface UserDao {
      */
     int insert(User user);
 
+    int insertRole(int uid);
+
     int insertSelectively(User user);
 
     /**
@@ -32,7 +33,6 @@ public interface UserDao {
 
     User selectByName(String username);
 
-    int update(User user);
 
     int updateSelectively(User user);
 
@@ -46,7 +46,8 @@ public interface UserDao {
      */
     User findById(int id);
 
-    int updateWhenPswMatches(UserOnModify user);
+    int update(UserOnModify user);
 
     List<User> queryAll();
+
 }

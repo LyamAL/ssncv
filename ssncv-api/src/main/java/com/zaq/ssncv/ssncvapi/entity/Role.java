@@ -1,22 +1,20 @@
 package com.zaq.ssncv.ssncvapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
  * @author ZAQ
  */
-@Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Getter
 public class Role implements GrantedAuthority {
+    @JsonIgnore
     private int uid;
-    private Authority authority;
 
-    @Override
-    public String getAuthority() {
-        return authority.toString();
-    }
+    private String authority;
 }

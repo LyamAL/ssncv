@@ -1,6 +1,9 @@
 package com.zaq.ssncv.ssncvapigateway.filter;
 
 import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author ZAQ
@@ -26,8 +29,10 @@ public class AccessFilter extends ZuulFilter {
 
     @Override
     public Object run() {
-//        RequestContext ctx = RequestContext.getCurrentContext();
-//        HttpServletRequest request = ctx.getRequest();
+        RequestContext ctx = RequestContext.getCurrentContext();
+        HttpServletRequest request = ctx.getRequest();
+        ctx.addZuulRequestHeader("original_authorization", request.getHeader("Authorization"));
+        //        RequestContext ctx = RequestContext.getCurrentContext();
 //        System.out.println(String.format("send %s request to %s", request.getMethod(), request.getRequestURL().toString()));
 //        Object accsessToken = request.getParameter("accessToken");
 //        if (accsessToken == null) {

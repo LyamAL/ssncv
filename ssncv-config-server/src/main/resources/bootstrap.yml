@@ -1,0 +1,28 @@
+encrypt:
+  key: ssncv
+server:
+  port: 2222
+spring:
+  application:
+    name: ssncv-config-server
+  cloud:
+    config:
+      server:
+        git:
+          username: LyamAL
+          password: Avrillavigne99...
+          uri: https://github.com/LyamAL/ssncv-micro.git
+          search-paths: ssncv-config-server/config-repo
+      username: AL
+      password: '{bcrypt}$2a$10$gix/mQjnFGzdvhpcGIgDh.pmiQaPkMrLrUsho9hrw8n7WfVwxSuuu'
+      label: master
+      profile: dev
+  security:
+    user:
+      name: AL
+      password: '{bcrypt}$2a$10$gix/mQjnFGzdvhpcGIgDh.pmiQaPkMrLrUsho9hrw8n7WfVwxSuuu'
+debug: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://zaqgogogo1:1111/eureka/, http://zaqgogogo2:1112/eureka/

@@ -1,5 +1,6 @@
 package com.zaq.ssncv.ssncvprovideruser.mapper;
 
+import com.zaq.ssncv.ssncvapi.entity.Role;
 import com.zaq.ssncv.ssncvapi.entity.User;
 import com.zaq.ssncv.ssncvapi.entity.UserOnModify;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,7 +22,6 @@ public interface UserMapper {
     /**
      * 删除用户
      *
-     * @param user
      * @return
      */
     int delete(int id);
@@ -30,15 +30,11 @@ public interface UserMapper {
 
     User selectByName(String username);
 
-    int update(User user);
-
     /**
-     * 修改用户资料，但需要通过旧信息的验证
-     *
      * @param user
      * @return
      */
-    int updateWhenPswMatches(UserOnModify user);
+    int update(UserOnModify user);
 
     int updateSelectively(User user);
 
@@ -53,4 +49,6 @@ public interface UserMapper {
     User findById(int id);
 
     List<User> queryAll();
+
+    int insertRole(Role role);
 }
