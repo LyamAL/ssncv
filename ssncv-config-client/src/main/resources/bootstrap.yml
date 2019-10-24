@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: ssncv-config-client
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: ssncv-config-server
+      profile: dev
+      label: master
+server:
+  port: 3333
+eureka:
+  client:
+    service-url:
+      defaultZone: http://zaqgogogo1:1111/eureka/, http://zaqgogogo2:1112/eureka/
+
