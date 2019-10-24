@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ssncv-config-client
+    name: ssncv
   cloud:
     config:
       discovery:
