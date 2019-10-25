@@ -24,7 +24,6 @@ public class CustomLogoutHandler implements LogoutHandler {
 
     @Override
     public void logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) {
-        //TODO 删除session?
         logger.info("进入登出处理类");
         Result<String> result = new Result<>();
         result.setMsg("You've logged out");

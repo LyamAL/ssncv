@@ -4,8 +4,8 @@ import com.zaq.ssncv.ssncvapi.entity.Authority;
 import com.zaq.ssncv.ssncvapi.entity.Result;
 import com.zaq.ssncv.ssncvapi.entity.User;
 import com.zaq.ssncv.ssncvapi.entity.UserOnModify;
+import com.zaq.ssncv.ssncvapi.service.BaseService;
 import com.zaq.ssncv.ssncvprovideruser.dao.UserDao;
-import com.zaq.ssncv.ssncvprovideruser.service.BaseService;
 import com.zaq.ssncv.ssncvprovideruser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -60,7 +60,9 @@ public class UserServiceImpl extends BaseService implements UserService {
     @Override
     public Result<String> update(UserOnModify user) {
         Result<String> result = new Result<>();
-        user.setNewPsw(bCryptPasswordEncoder.encode(user.getNewPsw()));
+        if (user.getNewPsw() != null) {
+            user.setNewPsw(bCryptPasswordEncoder.encode(user.getNewPsw()));
+        }
         wrapResponse(result, userDao.update(user));
         return result;
     }

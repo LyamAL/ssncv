@@ -17,8 +17,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/spot")
 public class SpotController {
-    private static final String MSG_ERROR = "数据库查询错误";
-    private static final String MSG_SUCCESS = "success";
     private SpotService spotService;
 
     public SpotController(@Autowired SpotService spotService) {
@@ -27,23 +25,12 @@ public class SpotController {
 
     @RequestMapping("/list/{name}")
     public Result<List<Spot>> matchName(@PathVariable String name, @RequestParam int start, @RequestParam int limit) {
-        List<Spot> list = spotService.matchName(name, start, limit);
-        Result<List<Spot>> res = new Result<>();
-        res.setSuccess(list != null);
-        res.setMsg(list != null ? MSG_SUCCESS : MSG_ERROR);
-        res.setData(list);
-        return res;
+        return spotService.matchName(name, start, limit);
     }
 
     @RequestMapping("/list/all")
-    public Result<List<Spot>> listAll(@RequestParam int start, @RequestParam int limit) {
-        Result<List<Spot>> res = new Result<>();
-        List<Spot> list = spotService.list(start, limit);
-        res.setSuccess(list != null);
-        res.setMsg(list != null ? MSG_SUCCESS : MSG_ERROR);
-        res.setData(list);
-        return res;
+    public Result<List<Spot>> listAll(@RequestParam(required = false) int start, @RequestParam(required = false) int limit) {
+        return spotService.list(start, limit);
     }
-
 
 }

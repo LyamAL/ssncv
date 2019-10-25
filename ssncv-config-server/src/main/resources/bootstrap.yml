@@ -2,7 +2,6 @@ encrypt:
   key: ssncv
 server:
   port: 2222
-
 spring:
   application:
     name: ssncv-config-server
@@ -10,9 +9,9 @@ spring:
     config:
       server:
         git:
+          uri: https://github.com/LyamAL/ssncv.git
           username: LyamAL
           password: Avrillavigne99...
-          uri: https://github.com/LyamAL/ssncv.git
           search-paths: ssncv-config-server/config-repo
       username: AL
       password: '{bcrypt}$2a$10$gix/mQjnFGzdvhpcGIgDh.pmiQaPkMrLrUsho9hrw8n7WfVwxSuuu'
@@ -27,5 +26,3 @@ eureka:
   client:
     service-url:
       defaultZone: http://zaqgogogo1:1111/eureka/, http://zaqgogogo2:1112/eureka/
-  instance:
-    instance-id: ssncv-config-server

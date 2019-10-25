@@ -23,22 +23,12 @@ public class InterestController {
 
     @RequestMapping("/list/all")
     public Result<List<Interest>> list() {
-        Result<List<Interest>> res = new Result<>();
-        List<Interest> list = interestService.listAll();
-        res.setSuccess(list != null);
-        res.setMsg(list != null ? "success" : "error");
-        res.setData(list);
-        return res;
+        return interestService.listAll();
     }
 
     @RequestMapping("/get")
     public Result<Interest> get() {
-        Result<Interest> res = new Result<>();
-        Interest interest = interestService.get();
-        res.setSuccess(interest != null);
-        res.setMsg(interest != null ? "success" : "error");
-        res.setData(interest);
-        return res;
+        return interestService.get();
     }
 
 

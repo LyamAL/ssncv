@@ -19,8 +19,8 @@ import java.util.List;
 @RequestMapping("/spot")
 public interface SpotService {
     @RequestMapping("/list/all")
-    Result<List<Spot>> listAll(@RequestParam int start, @RequestParam int limit);
+    Result<List<Spot>> listAll(@RequestParam(value = "start", required = false) int start, @RequestParam(value = "limit", required = false) int limit);
 
     @RequestMapping("/list/{name}")
-    Result<List<Spot>> matchName(@PathVariable String name, @RequestParam int start, @RequestParam int limit);
+    Result<List<Spot>> matchName(@PathVariable(value = "name") String name, @RequestParam(value = "start", required = false) int start, @RequestParam(value = "limit", required = false) int limit);
 }

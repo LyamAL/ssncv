@@ -1,7 +1,6 @@
 package com.zaq.ssncv.ssncvprovidernotification.dao.impl;
 
 import com.zaq.ssncv.ssncvapi.entity.Notification;
-import com.zaq.ssncv.ssncvapi.entity.PageBean;
 import com.zaq.ssncv.ssncvprovidernotification.dao.NotificationDao;
 import com.zaq.ssncv.ssncvprovidernotification.mapper.NotificationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +40,6 @@ public class NotificationDaoImpl implements NotificationDao {
         return notificationMapper.selectById(id);
     }
 
-    @Override
-    public PageBean<Notification> list(PageBean<Notification> pageBean) {
-        pageBean.setData(notificationMapper.list(pageBean));
-        return pageBean;
-    }
 
     @Override
     public Notification selectLatest() {

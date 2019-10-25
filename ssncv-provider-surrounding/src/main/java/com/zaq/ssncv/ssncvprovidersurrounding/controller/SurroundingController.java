@@ -23,12 +23,7 @@ public class SurroundingController {
 
     @RequestMapping("/list/all")
     public Result<List<Surrounding>> listAll() {
-        Result<List<Surrounding>> result = new Result<>();
-        List<Surrounding> list = surroundingService.listAll();
-        result.setData(list);
-        result.setSuccess(list != null);
-        result.setMsg(list != null ? "success" : "fail");
-        return result;
+        return surroundingService.listAll();
     }
 
 }

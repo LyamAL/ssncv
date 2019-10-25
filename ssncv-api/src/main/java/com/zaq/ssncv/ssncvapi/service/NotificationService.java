@@ -2,11 +2,9 @@ package com.zaq.ssncv.ssncvapi.service;
 
 import com.zaq.ssncv.ssncvapi.FeignConfiguration;
 import com.zaq.ssncv.ssncvapi.entity.Notification;
-import com.zaq.ssncv.ssncvapi.entity.PageBean;
 import com.zaq.ssncv.ssncvapi.entity.Result;
 import com.zaq.ssncv.ssncvapi.fallback.NotificationServiceFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
         fallbackFactory = NotificationServiceFallbackFactory.class)
 @RequestMapping("/notification")
 public interface NotificationService {
-    @RequestMapping("/list/all")
-    Result<PageBean<Notification>> list(@RequestBody @Nullable Notification notification);
-
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.PUT)
     Result<String> delete(@PathVariable("id") int id);
 

@@ -1,6 +1,6 @@
 package com.zaq.ssncv.ssncvprovideruser2.config;
 
-import com.zaq.ssncv.ssncvprovideruser.entity.AuthParameters;
+import com.zaq.ssncv.ssncvprovideruser2.entity.AuthParameters;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;

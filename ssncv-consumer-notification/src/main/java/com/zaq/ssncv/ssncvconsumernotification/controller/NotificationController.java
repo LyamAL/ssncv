@@ -1,11 +1,9 @@
 package com.zaq.ssncv.ssncvconsumernotification.controller;
 
 import com.zaq.ssncv.ssncvapi.entity.Notification;
-import com.zaq.ssncv.ssncvapi.entity.PageBean;
 import com.zaq.ssncv.ssncvapi.entity.Result;
 import com.zaq.ssncv.ssncvapi.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,11 +17,6 @@ public class NotificationController {
 
     public NotificationController(@Autowired NotificationService notificationService) {
         this.notificationService = notificationService;
-    }
-
-    @RequestMapping("/list/all")
-    public Result<PageBean<Notification>> list(@RequestBody @Nullable Notification notification) {
-        return notificationService.list(notification);
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.PUT)

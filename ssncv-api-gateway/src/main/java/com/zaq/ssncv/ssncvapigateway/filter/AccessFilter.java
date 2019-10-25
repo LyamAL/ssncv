@@ -31,17 +31,32 @@ public class AccessFilter extends ZuulFilter {
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        ctx.addZuulRequestHeader("original_authorization", request.getHeader("Authorization"));
-        //        RequestContext ctx = RequestContext.getCurrentContext();
-//        System.out.println(String.format("send %s request to %s", request.getMethod(), request.getRequestURL().toString()));
-//        Object accsessToken = request.getParameter("accessToken");
-//        if (accsessToken == null) {
-//            System.out.println("access token is empty");
-//            ctx.setSendZuulResponse(false);
-//            ctx.setResponseStatusCode(401);
-//            return null;
-//        }
-//        System.out.println("access token is OK");
+        ctx.addZuulRequestHeader("original_accessToken", request.getHeader("AccessToken"));
+        String accessToken = request.getHeader("AccessToken");
+        String url = request.getRequestURI();
+
+        if (accessToken != null && accessToken.startsWith("Bearer")) {
+            String token = accessToken.replace("Bearer ", "");
+            if (url.contains("user/add") || url.contains("user/login")) {
+                return null;
+            }
+            if ("".equals(token)) {
+                System.out.println("token is empty");
+                ctx.setSendZuulResponse(false);
+                ctx.setResponseStatusCode(401);
+                return null;
+            }
+
+        } else {
+            if (url.contains("image")) {
+                System.out.println("retrieve image resource");
+                return null;
+            }
+            System.out.println("token is null");
+            ctx.setSendZuulResponse(false);
+            ctx.setResponseStatusCode(401);
+            return null;
+        }
         return null;
     }
 }

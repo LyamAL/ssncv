@@ -27,7 +27,6 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         logger.info("进入登出成功处理类");
-        //TODO 删除session?
         Result<String> result = new Result<>();
         result.setMsg("You've logged out");
         result.setSuccess(true);

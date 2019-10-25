@@ -1,10 +1,7 @@
 package com.zaq.ssncv.ssncvprovidernotification.mapper;
 
 import com.zaq.ssncv.ssncvapi.entity.Notification;
-import com.zaq.ssncv.ssncvapi.entity.PageBean;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 @Mapper
 public interface NotificationMapper {
@@ -19,10 +16,6 @@ public interface NotificationMapper {
     int updateByIdSelectively(Notification notification);
 
     int updateById(Notification notification);
-
-
-    List<Notification> list(PageBean<Notification> pageBean);
-
 
     Notification selectLatest();
 }

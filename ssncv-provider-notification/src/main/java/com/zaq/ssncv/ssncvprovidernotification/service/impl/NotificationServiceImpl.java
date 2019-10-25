@@ -1,7 +1,8 @@
 package com.zaq.ssncv.ssncvprovidernotification.service.impl;
 
 import com.zaq.ssncv.ssncvapi.entity.Notification;
-import com.zaq.ssncv.ssncvapi.entity.PageBean;
+import com.zaq.ssncv.ssncvapi.entity.Result;
+import com.zaq.ssncv.ssncvapi.service.BaseService;
 import com.zaq.ssncv.ssncvprovidernotification.dao.NotificationDao;
 import com.zaq.ssncv.ssncvprovidernotification.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,8 @@ import org.springframework.stereotype.Service;
  * @author ZAQ
  */
 @Service
-public class NotificationServiceImpl implements NotificationService {
+public class NotificationServiceImpl extends BaseService implements NotificationService {
 
-    public static final int SUCCESS = 1;
-    public static final int ERROR = -1;
     private NotificationDao notificationDao;
 
     public NotificationServiceImpl(@Autowired NotificationDao notificationDao) {
@@ -22,35 +21,31 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public int delete(int id) {
-        int status = notificationDao.delete(id);
-        if (status > 0) {
-            return SUCCESS;
-        }
-        return ERROR;
+    public Result<String> delete(int id) {
+        Result<String> result = new Result<>();
+        wrapResponse(result, notificationDao.delete(id));
+        return result;
     }
 
     @Override
-    public int saveOrUpdate(Notification notification) {
-        int status = notificationDao.saveOrUpdate(notification);
-        if (status > 0) {
-            return SUCCESS;
-        }
-        return ERROR;
+    public Result<String> saveOrUpdate(Notification notification) {
+        Result<String> result = new Result<>();
+        wrapResponse(result, notificationDao.saveOrUpdate(notification));
+        return result;
+
     }
 
     @Override
-    public Notification selectById(Integer id) {
-        return notificationDao.selectById(id);
+    public Result<Notification> selectById(Integer id) {
+        Result<Notification> result = new Result<>();
+        wrapResponse(result, notificationDao.selectById(id));
+        return result;
     }
 
-    @Override
-    public PageBean<Notification> list(PageBean<Notification> pageBean) {
-        return notificationDao.list(pageBean);
-    }
 
     @Override
-    public Notification selectLatest() {
+    public Result<Notification> selectLatest() {
+        //TODO
         return null;
     }
 }
