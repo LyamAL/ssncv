@@ -6,7 +6,6 @@
     <modules>
         <module>ssncv-api</module>
         <module>ssncv-provider-user</module>
-        <module>ssncv-consumer-user</module>
         <module>ssncv-eureka</module>
         <module>ssncv-eureka-2</module>
         <module>ssncv-provider-user-2</module>

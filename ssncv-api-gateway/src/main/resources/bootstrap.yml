@@ -7,10 +7,8 @@ spring:
       profile: dev
       name: ssncv
       label: master
-
 eureka:
   client:
     service-url:
       defaultZone: http://zaqgogogo1:1111/eureka/, http://zaqgogogo2:1112/eureka/
 debug: true
-

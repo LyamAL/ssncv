@@ -5,13 +5,10 @@ spring:
         enabled: true
         service-id: ssncv-config-server
       profile: dev
-      fail-fast: true
       name: ssncv
       label: master
-
 eureka:
   client:
     service-url:
       defaultZone: http://zaqgogogo1:1111/eureka/, http://zaqgogogo2:1112/eureka/
 debug: true
-

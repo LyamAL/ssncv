@@ -1,8 +1,11 @@
-encrypt:
-  key: ssncv
+logging:
+  level:
+    org.springframework.web: DEBUG
 server:
   port: 2222
 spring:
+  http:
+    log-request-details: true
   application:
     name: ssncv-config-server
   cloud:
@@ -13,14 +16,8 @@ spring:
           username: LyamAL
           password: Avrillavigne99...
           search-paths: ssncv-config-server/config-repo
-      username: AL
-      password: '{bcrypt}$2a$10$gix/mQjnFGzdvhpcGIgDh.pmiQaPkMrLrUsho9hrw8n7WfVwxSuuu'
       label: master
       profile: dev
-  security:
-    user:
-      name: AL
-      password: '{bcrypt}$2a$10$gix/mQjnFGzdvhpcGIgDh.pmiQaPkMrLrUsho9hrw8n7WfVwxSuuu'
 debug: true
 eureka:
   client:
