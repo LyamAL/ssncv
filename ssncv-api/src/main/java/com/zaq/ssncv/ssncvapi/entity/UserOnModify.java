@@ -18,7 +18,6 @@ public class UserOnModify {
     private String oldPhone;
     private String newName;
     private String oldName;
-    private String avatar;
     private String newPsw;
     private String oldPsw;
 }

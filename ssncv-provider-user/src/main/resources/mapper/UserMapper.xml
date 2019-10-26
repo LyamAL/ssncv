@@ -5,7 +5,6 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
-        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
     </resultMap>
 
@@ -18,7 +17,7 @@
         where uid = #{id}
     </select>
     <sql id="Base_Column_List">
-        id, phone, username, avatar, password
+        id, phone, username, password
     </sql>
 
     <select id="selectById" parameterType="java.lang.Integer"
@@ -58,9 +57,9 @@
 
     <insert id="insert" parameterType="User" statementType="PREPARED"
             keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-        insert into user (id, phone, username, avatar, password)
+        insert into user (id, phone, username, password)
         values (#{id,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
-                #{avatar,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+             #{password,jdbcType=VARCHAR})
     </insert>
     <insert id="insertRole" parameterType="Integer" statementType="PREPARED">
         insert into role
@@ -78,9 +77,6 @@
             <if test="username != null">
                 username,
             </if>
-            <if test="avatar != null">
-                avatar,
-            </if>
             <if test="password != null">
                 password,
             </if>
@@ -95,9 +91,6 @@
             <if test="username != null">
                 #{username,jdbcType=VARCHAR},
             </if>
-            <if test="avatar != null">
-                #{avatar,jdbcType=VARCHAR},
-            </if>
             <if test="password != null">
                 #{password,jdbcType=VARCHAR},
             </if>
@@ -108,7 +101,6 @@
         update user
         set phone    = #{newPhone,jdbcType=VARCHAR},
             username = #{newName,jdbcType=VARCHAR},
-            avatar   = #{avatar,jdbcType=VARCHAR},
             password = #{newPsw,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
