@@ -46,7 +46,6 @@ public class AccessFilter extends ZuulFilter {
                 ctx.setResponseStatusCode(401);
                 return null;
             }
-
         } else {
             if (url.contains("image")) {
                 System.out.println("retrieve image resource");

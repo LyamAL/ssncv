@@ -14,15 +14,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/comment")
 public class CommentController {
-
     private CommentService commentService;
-
     public CommentController(@Autowired CommentService commentService) {
         this.commentService = commentService;
     }
 
     @RequestMapping("/get")
-    public Result<List<Comment>> listBySpot(@RequestParam String sid) {
+    public Result<List<Comment>> listBySpot(@RequestParam("sid") String sid) {
         return commentService.listBySpot(sid);
     }
 
@@ -30,6 +28,4 @@ public class CommentController {
     public Result<String> add(@RequestBody Comment comment) {
         return commentService.add(comment);
     }
-
-
 }

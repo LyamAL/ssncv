@@ -18,7 +18,8 @@ import java.util.List;
 @RequestMapping("/comment")
 public interface CommentService {
     @RequestMapping("/get")
-    Result<List<Comment>> listBySpot(@RequestParam String sid);
+    Result<List<Comment>> listBySpot(@RequestParam("sid" +
+            "") String sid);
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     Result<String> add(@RequestBody Comment comment);
