@@ -17,9 +17,8 @@ import java.util.List;
 @FeignClient(value = "SSNCV-PROVIDER-COMMENT", fallbackFactory = CommentServiceFallbackFactory.class)
 @RequestMapping("/comment")
 public interface CommentService {
-    @RequestMapping("/get")
-    Result<List<Comment>> listBySpot(@RequestParam("sid" +
-            "") String sid);
+    @RequestMapping("/list")
+    Result<List<Comment>> listBySpot(@RequestParam("sid") String sid);
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     Result<String> add(@RequestBody Comment comment);

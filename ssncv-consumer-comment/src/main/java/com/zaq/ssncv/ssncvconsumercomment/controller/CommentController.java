@@ -21,8 +21,8 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @RequestMapping("/get")
-    public Result<List<Comment>> listBySpot(@RequestParam String sid) {
+    @RequestMapping("/list")
+    public Result<List<Comment>> listBySpot(@RequestParam("sid") String sid) {
         return commentService.listBySpot(sid);
     }
 

@@ -2,6 +2,8 @@ package com.zaq.ssncv.ssncveureka2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 /**
@@ -9,8 +11,13 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
  */
 @SpringBootApplication
 @EnableEurekaServer
-public class EurekaServer2App {
+public class EurekaServer2App extends SpringBootServletInitializer {
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(EurekaServer2App.class);
+    }
+
     public static void main(String[] args) {
-        SpringApplication.run(EurekaServer2App.class, args);
+        new SpringApplicationBuilder(EurekaServer2App.class).run(args);
     }
 }

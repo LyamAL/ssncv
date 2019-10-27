@@ -12,6 +12,7 @@
     <artifactId>ssncv-provider-spot</artifactId>
 
     <dependencies>
+
         <dependency>
             <groupId>com.zaq.ssncv</groupId>
             <artifactId>ssncv-api</artifactId>

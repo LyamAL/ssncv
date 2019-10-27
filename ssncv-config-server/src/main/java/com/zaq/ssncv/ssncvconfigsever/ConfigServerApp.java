@@ -2,6 +2,8 @@ package com.zaq.ssncv.ssncvconfigsever;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.config.server.EnableConfigServer;
 
@@ -12,8 +14,13 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 @EnableDiscoveryClient
 @EnableConfigServer
 @SpringBootApplication
-public class ConfigServerApp {
+public class ConfigServerApp extends SpringBootServletInitializer {
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(ConfigServerApp.class);
+    }
+
     public static void main(String[] args) {
-        SpringApplication.run(ConfigServerApp.class, args);
+        new SpringApplicationBuilder(ConfigServerApp.class).run(args);
     }
 }

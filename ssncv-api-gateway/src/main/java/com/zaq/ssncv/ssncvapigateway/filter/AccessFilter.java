@@ -4,6 +4,7 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.URL;
 
 /**
  * @author ZAQ
@@ -34,7 +35,10 @@ public class AccessFilter extends ZuulFilter {
         ctx.addZuulRequestHeader("original_accessToken", request.getHeader("AccessToken"));
         String accessToken = request.getHeader("AccessToken");
         String url = request.getRequestURI();
+        if ("/api/comment/list".equals(url)&& request.getParameterMap().containsKey("sid")){
+            URL u = ctx.getRouteHost();
 
+        }
         if (accessToken != null && accessToken.startsWith("Bearer")) {
             String token = accessToken.replace("Bearer ", "");
             if (url.contains("user/add") || url.contains("user/login")) {
